@@ -1,0 +1,94 @@
+{
+  "info": {
+    "_postman_id": "tutorial-management-api",
+    "name": "Tutorial Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "http://localhost:3000/api/auth/register", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","auth","register"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"normaluser\",\n  \"email\": \"user@test.com\",\n  \"password\": \"123456\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Register Admin",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:3000/api/auth/register", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","auth","register"] },
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"adminuser\",\n  \"email\": \"admin@test.com\",\n  \"password\": \"123456\",\n  \"role\": \"admin\"\n}" }
+      }
+    },
+    {
+      "name": "Login User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:3000/api/auth/login", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","auth","login"] },
+        "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@test.com\",\n  \"password\": \"123456\"\n}" }
+      }
+    },
+    {
+      "name": "Login Admin",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "http://localhost:3000/api/auth/login", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","auth","login"] },
+        "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@test.com\",\n  \"password\": \"123456\"\n}" }
+      }
+    },
+    {
+      "name": "Create Tutorial",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{userToken}}" }
+        ],
+        "url": { "raw": "http://localhost:3000/api/tutorials", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","tutorials"] },
+        "body": { "mode": "raw", "raw": "{\n  \"title\": \"Learn Node.js\",\n  \"description\": \"Node.js tutorial\",\n  \"published\": true\n}" }
+      }
+    },
+    {
+      "name": "Get All Tutorials (Search + Pagination)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }],
+        "url": { "raw": "http://localhost:3000/api/tutorials?page=1&limit=5&title=node", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","tutorials"], "query": [{ "key": "page", "value": "1" }, { "key": "limit", "value": "5" }, { "key": "title", "value": "node" }] }
+      }
+    },
+    {
+      "name": "Get My Tutorials",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }],
+        "url": { "raw": "http://localhost:3000/api/tutorials/my?page=1&limit=5", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","tutorials","my"], "query": [{ "key": "page", "value": "1" }, { "key": "limit", "value": "5" }] }
+      }
+    },
+    {
+      "name": "Delete Tutorial (Admin)",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+        "url": { "raw": "http://localhost:3000/api/tutorials/1", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","tutorials","1"] }
+      }
+    },
+    {
+      "name": "Delete Tutorial (User - Forbidden)",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }],
+        "url": { "raw": "http://localhost:3000/api/tutorials/2", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["api","tutorials","2"] }
+      }
+    }
+  ]
+}
